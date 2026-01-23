@@ -8,7 +8,7 @@ Fully supports slash commands. Allows members to click buttons to receive select
 🌟 **Support the project by giving it a star and forking the repository**
 
 <p align="center">
-  <img src="https://github.com/aozdev/v14-ButtonRoles/blob/main/button%20role%20sytsem.mp4?raw=true" alt="Bot Preview (Soon)" width="600">
+  <img src="https://github.com/aozdev/v14-ButtonRoles/blob/main/button%20role%20sytsem.gif?raw=true" alt="Bot Preview (Soon)" width="600">
 </p>
 
 # Installation
