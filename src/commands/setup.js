@@ -1,4 +1,3 @@
-
 const {
   SlashCommandBuilder,
   EmbedBuilder,
@@ -38,6 +37,7 @@ module.exports = {
           .setCustomId(`panel_role_${index}`)
           .setLabel(role.label)
           .setStyle(ButtonStyle.Primary)
+          .setEmoji(panel.roles[index].emoji || undefined)
       );
     });
 
