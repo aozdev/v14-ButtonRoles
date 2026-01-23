@@ -7,43 +7,59 @@ const {
   PermissionFlagsBits
 } = require("discord.js");
 
+const config = require("../config.json");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("setup")
-    .setDescription("Send the button role panel")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+    .setDescription("Send the button role panel"),
 
   async execute(interaction) {
-    const panel = interaction.client.config.panel;
+    const member = interaction.member;
 
-    if (!panel.roles || panel.roles.length !== 4) {
+    if (!member.roles.cache.has(config.setupRole)) {
       return interaction.reply({
-        content: "❌ Exactly 4 roles must be defined in config.json.",
+        content: "❌ You are not authorized to use this command.",
+        ephemeral: true
+      });
+    }
+
+    const channel = interaction.guild.channels.cache.get(
+      config.panelChannel
+    );
+
+    if (!channel) {
+      return interaction.reply({
+        content: "❌ Panel channel not found.",
         ephemeral: true
       });
     }
 
     const embed = new EmbedBuilder()
-      .setTitle(panel.embed.title)
-      .setDescription(panel.embed.description)
-      .setColor(panel.embed.color)
-      .setFooter({ text: panel.embed.footer });
+      .setTitle(config.panel.title)
+      .setDescription(config.panel.description)
+      .setColor(config.panel.color);
 
     const row = new ActionRowBuilder();
 
-    panel.roles.forEach((role, index) => {
+    config.panel.buttons.slice(0, 4).forEach((btn, index) => {
       row.addComponents(
         new ButtonBuilder()
-          .setCustomId(`panel_role_${index}`)
-          .setLabel(role.label)
-          .setStyle(ButtonStyle.Primary)
-          .setEmoji(panel.roles[index].emoji || undefined)
+          .setCustomId(`role_${btn.roleId}`)
+          .setLabel(btn.label)
+          .setEmoji(btn.emoji)
+          .setStyle(ButtonStyle[btn.style])
       );
     });
 
-    await interaction.reply({
+    await channel.send({
       embeds: [embed],
       components: [row]
+    });
+
+    await interaction.reply({
+      content: "✅ Role panel has been sent.",
+      ephemeral: true
     });
   }
 };
