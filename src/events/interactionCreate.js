@@ -1,38 +1,39 @@
 module.exports = {
   name: "interactionCreate",
   async execute(interaction) {
-    if (!interaction.isButton()) return;
 
-    const panel = interaction.client.config.panel;
-    const emojis = interaction.client.config.emojis;
+    // Eğer interaction değilse direkt çık
+    if (!interaction || typeof interaction.isChatInputCommand !== "function") return;
 
-    if (!interaction.customId.startsWith("panel_role_")) return;
+    // Slash Commands
+    if (interaction.isChatInputCommand()) {
+      const command = interaction.client.commands.get(interaction.commandName);
+      if (!command) return;
 
-    const index = parseInt(interaction.customId.split("_")[2]);
-    const roleData = panel.roles[index];
-
-    if (!roleData) {
-      return interaction.reply({ content: `${emojis.error} Role not found!`, ephemeral: true });
+      try {
+        await command.execute(interaction);
+      } catch (err) {
+        console.error(err);
+      }
+      return;
     }
+
+    // Button Roles
+    if (!interaction.isButton()) return;
+    if (!interaction.customId.startsWith("role_")) return;
+
+    const roleId = interaction.customId.split("_")[1];
+    const role = interaction.guild.roles.cache.get(roleId);
+    if (!role) return;
 
     const member = interaction.member;
-    const role = interaction.guild.roles.cache.get(roleData.id);
 
-    if (!role) {
-      return interaction.reply({ content: `${emojis.error} Role does not exist in this server.`, ephemeral: true });
-    }
-
-    try {
-      if (member.roles.cache.has(role.id)) {
-        await member.roles.remove(role);
-        await interaction.reply({ content: `${emojis.removed} Removed the role **${role.name}**`, ephemeral: true });
-      } else {
-        await member.roles.add(role);
-        await interaction.reply({ content: `${emojis.success} Added the role **${role.name}**`, ephemeral: true });
-      }
-    } catch (err) {
-      console.error(err);
-      return interaction.reply({ content: `${emojis.error} Failed to update role. Check bot permissions.`, ephemeral: true });
+    if (member.roles.cache.has(roleId)) {
+      await member.roles.remove(roleId);
+      await interaction.reply({ content: `➖ ${role.name} removed`, ephemeral: true });
+    } else {
+      await member.roles.add(roleId);
+      await interaction.reply({ content: `➕ ${role.name} added`, ephemeral: true });
     }
   }
 };
