@@ -8,7 +8,7 @@ Fully supports slash commands. Allows members to click buttons to receive select
 🌟 **Support the project by giving it a star and forking the repository**
 
 <p align="center">
-  <img src="https://github.com/aozdev/v14-BotTemplate/blob/main/helpmenu.png?raw=true" alt="Bot Preview" width="600">
+  <img src=" alt="Bot Preview (Soon)" width="600">
 </p>
 
 # Installation
