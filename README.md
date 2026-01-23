@@ -14,7 +14,7 @@ Fully supports slash commands. Allows members to click buttons to receive select
 # Installation
 
 1. Install **Node.js** on your computer.
-> Requires **Node.js v18 or never**
+> Requires **Node.js v18 or newer**
 2. Download this project as a ZIP file and extract it to a folder.
 3. Configure the `src/config.json` file with your bot credentials.
 4. Open a terminal (PowerShell or CMD) in the project directory.
