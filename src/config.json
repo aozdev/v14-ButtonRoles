@@ -1,1 +1,27 @@
+{
+  "token": "BOT_TOKEN",
+  "clientId": "CLIENT_ID",
+
+  "panel": {
+    "embed": {
+      "title": "Role Panel",
+      "description": "Click the buttons below to manage your roles.",
+      "color": "#2F3136",
+      "footer": "Button Role System"
+    },
+
+    "roles": [
+      { "id": "ROLE_ID_1", "label": "Role Name 1" },
+      { "id": "ROLE_ID_2", "label": "Role Name  2" },
+      { "id": "ROLE_ID_3", "label": "Role Name 3" },
+      { "id": "ROLE_ID_4", "label": "Role Name 4" }
+    ]
+  },
+
+  "emojis": {
+    "success": "✅",
+    "removed": "➖",
+    "error": "❌"
+  }
+}
 
